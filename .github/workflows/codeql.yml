@@ -41,8 +41,12 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-    - name: Build 
+    - name: Setup 
+      run: apt-get update && apt install -y build-essential uuid-dev libsecp256k1-dev wget && rm -rf /var/lib/apt/lists/* && rm -rf /var/cache/apt/archives/*
+    
+    - name: build
       run: make
+      
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
